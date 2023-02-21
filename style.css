@@ -1,0 +1,10 @@
+.nav{
+    display: flex;
+    flex-direction: row;
+
+}
+
+.nav_item{
+    text-decoration: none;
+
+}

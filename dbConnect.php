@@ -1,16 +1,11 @@
 <?php
-
-
-//Define your host here.
+//host.
 $HostName = "localhost";
-
-//Define your database username here.
+//database username.
 $HostUser = "root";
-
-//Define your database password here.
+//database password.
 $HostPass = "";
-
-//Define your database name here.
+//database name.
 $DatabaseName = "book_club";
 
 ?>

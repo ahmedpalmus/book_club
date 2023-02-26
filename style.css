@@ -47,7 +47,8 @@ body {
     flex-direction: row;
     margin: auto;
     width: fit-content;
-    background-color: white;
+    background: rgb(2,0,36);
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 40%, rgba(0,212,255,1) 100%);
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     border-radius:20px;
     height: 500px;
@@ -58,9 +59,10 @@ body {
 width: 350px;
 }
 
-.form_content h1 {
+.form_div h1 {
     text-align: center;
     padding-bottom: 50px;
+    color: white;
 }
 
 .input_div {
@@ -69,12 +71,14 @@ width: 350px;
     font-weight: 600;
     border: 1px solid #7f7f86;
     border-radius: 5px;
+    background-color: white;
 }
 
 .label_div {
     padding-left: 10px;
     font-weight: 600;
     margin-bottom: 4px;
+    color: white;
 }
 
 input {

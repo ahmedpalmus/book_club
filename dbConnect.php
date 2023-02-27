@@ -1,5 +1,5 @@
 <?php
-//host.
+//host
 $HostName = "localhost";
 //database username.
 $HostUser = "root";

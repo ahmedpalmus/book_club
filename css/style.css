@@ -14,7 +14,7 @@ body {
     box-shadow: 0px 4px 10px rgba(55, 8, 226, 0.1);
     /* Adds a subtle box shadow to the nav bar */
     padding: 5px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
 
 }
 
@@ -196,4 +196,26 @@ input {
 border-radius: 0px 20px 20px 0px;
 opacity: 80%;
 
+}
+
+.main_cards{
+    display: flex;
+    flex-direction: row;
+    align-content: space-around;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: auto;
+    padding: 50px;
+}
+
+.card{
+    background: #000428;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+              
+    padding: 20px;
+    height: 350px;
+    width: 300px;
+    margin: 20px;
+    border-radius: 10px;
 }

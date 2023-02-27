@@ -24,24 +24,24 @@
             var error = 0;
             if (username.length < 3 || !hasWhiteSpace(username)) {
                 error = 1;
-                document.getElementById("username").style.color = "red";
+                document.getElementById("user_l").style.color = "red";
 
             } else {
-                document.getElementById("username").style.color = "black";
+                document.getElementById("user_l").style.color = "black";
             }
             if (fullname.length < 3) {
                 error = 1;
-                document.getElementById("fullname").style.color = "red";
+                document.getElementById("name_l").style.color = "red";
 
             } else {
-                document.getElementById("fullname").style.color = "black";
+                document.getElementById("name_l").style.color = "black";
             }
             if (address.length < 3) {
                 error = 1;
-                document.getElementById("address").style.color = "red";
+                document.getElementById("address_l").style.color = "red";
 
             } else {
-                document.getElementById("address").style.color = "black";
+                document.getElementById("address_l").style.color = "black";
             }
 
             if (email.length < 1 || !email.toLowerCase()
@@ -49,52 +49,52 @@
                     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
                 )) {
                 error = 1;
-                document.getElementById("email").style.color = "red";
-                document.getElementById("email").value = "";
-                document.getElementById('email').placeholder = 'Enter a valid email';
+                document.getElementById("email_l").style.color = "red";
+                document.getElementById("email_l").value = "";
+                document.getElementById('email_l').placeholder = 'Enter a valid email';
 
             } else {
-                document.getElementById("email").style.color = "black";
+                document.getElementById("email_l").style.color = "black";
             }
             if (!mobile.match(/^\d{10}$/) || !mobile.startsWith('05')) {
                 error = 1;
-                document.getElementById("mobile").style.color = "red";
-                document.getElementById('mobile').value = "";
-                document.getElementById('mobile').placeholder = 'Enter a valid phone';
+                document.getElementById("phone_l").style.color = "red";
+                document.getElementById('phone_l').value = "";
+                document.getElementById('phone_l').placeholder = 'Enter a valid phone';
 
 
             } else {
-                document.getElementById("mobile").style.color = "black";
-                document.getElementById("mobile").placeholder = "Phone Number";
+                document.getElementById("phone_l").style.color = "black";
+                document.getElementById("phone_l").placeholder = "Phone";
 
             }
 
             if (!password_1.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)) {
                 error = 1;
-                document.getElementById("passErr").style.color = "red";
-                document.getElementById("passErr").value = "At least 8 chars (numbers, lowercase and uppercase) ";
+                document.getElementById("pass_l").style.color = "red";
+                document.getElementById("pass_l").value = "At least 8 chars (numbers, lowercase and uppercase) ";
 
 
             } else if (password_1 != password_2) {
                 error = 1;
-                document.getElementById("passErr").style.color = "red";
-                document.getElementById("passErr").value = "Passwords don't match";
+                document.getElementById("pass_l").style.color = "red";
+                document.getElementById("pass_l").value = "Passwords don't match";
 
 
             } else {
-                document.getElementById("passErr").style.color = "black";
-                document.getElementById("passErr").value = "Password";
+                document.getElementById("pass_l").style.color = "black";
+                document.getElementById("pass_l").value = "Password";
             }
 
             if (error == 0) {
-                var cv = new Object();
-                cv.username = username;
-                cv.password = password_1;
-                cv.email = email;
-                cv.mobile = mobile;
-                cv.address = address;
-                cv.fullname = fullname;
-                var str = JSON.stringify(cv);
+                var reg = new Object();
+                reg.username = username;
+                reg.password = password_1;
+                reg.email = email;
+                reg.mobile = mobile;
+                reg.address = address;
+                reg.fullname = fullname;
+                var str = JSON.stringify(reg);
 
                 $.ajax({
                     type: "POST",
@@ -107,7 +107,8 @@
                         if (data.startsWith("Error")) {
                             alert(data);
                         } else {
-                            uploadImage(data);
+                            alert("Addedd successfully");
+                            
                         }
                     }
                 });

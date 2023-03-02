@@ -9,7 +9,7 @@ body {
 .nav {
     display: flex;
     flex-direction: row;
-    background-color: #212a93;
+    background-color: #9b020f;
     box-shadow: 0px 4px 10px rgba(55, 8, 226, 0.1);
     /* Adds a subtle box shadow to the nav bar */
     padding: 5px;
@@ -46,8 +46,8 @@ body {
     flex-direction: row;
     margin: auto;
     width: fit-content;
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 40%, rgba(0,212,255,1) 100%);
+    background:  rgb(150, 3, 32);
+    background: linear-gradient(90deg, rgb(150, 1, 1) 0%, rgb(196, 6, 16) 40%, rgb(252, 4, 157) 100%);
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     border-radius:20px;
     height: 500px;
@@ -63,8 +63,8 @@ body {
     flex-direction: column;
     margin: auto;
     width: fit-content;
-    background: rgb(2,0,36);
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 40%, rgba(0,212,255,1) 100%);
+    background:  rgb(150, 3, 32);
+    background: linear-gradient(90deg, rgb(150, 1, 1) 0%, rgb(196, 6, 16) 40%, rgb(136, 1, 1) 100%);
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
     border-radius:20px;
     height: fit-content;
@@ -75,6 +75,11 @@ body {
 .form_content {
     padding: 20px;
 width: 350px;
+}
+
+.info_content {
+    padding: 20px;
+width: 700px;
 }
 
 .form_div h1 {
@@ -109,7 +114,11 @@ input {
     width: 80%;
 }
 
-
+textarea{
+    padding: 10px;
+    width: 90%;
+    border: none;
+}
 /* CSS */
 
 
@@ -124,7 +133,7 @@ input {
   border: 0 solid #e5e7eb;
   border-radius: .5rem;
   box-sizing: border-box;
-  color: #212a93;
+  color: rgb(128, 2, 27);
   column-gap: 1rem;
   cursor: pointer;
   font-family: ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
@@ -163,7 +172,7 @@ input {
     border: none;
     width: 100%;
     color: #fff;
-    background: linear-gradient(180deg, #4B91F7 0%, #367AF6 100%);
+    background: linear-gradient(180deg, #997777 0%, #e9b7b7 100%);
     background-origin: border-box;
     box-shadow: 0px 0.5px 1.5px rgba(54, 122, 246, 0.25), inset 0px 0.8px 0px -0.25px rgba(255, 255, 255, 0.2);
     user-select: none;
@@ -193,7 +202,7 @@ input {
     height: 100%;
 /* top-left top-right bottom-right bottom-left */
 border-radius: 0px 20px 20px 0px;
-opacity: 80%;
+opacity: 90%;
 
 }
 
@@ -212,17 +221,15 @@ opacity: 80%;
 
 .card{
 
-    background: #eacda3;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to top, #d6ae7b, #eacda3);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to top, #d6ae7b, #eacda3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-                    
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    background:  #f1faee;
+    background-image: linear-gradient(to bottom right, #f1faee, #E2D1C3);
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;               
 
         
     padding: 20px;
     height: 200px;
     width: 15%;
-    margin: 20px;
+    margin: 50px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -242,8 +249,15 @@ opacity: 80%;
 }
 
 .card .title{
-    color: whitesmoke;
+    color: crimson;
     text-align: center;
     font-size: 30px;
     font-weight: 800;
+}
+
+#avatar{
+    display: block;
+    margin: auto;
+    width: 150px;
+    border-radius: 10px;
 }

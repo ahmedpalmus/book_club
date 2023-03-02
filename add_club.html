@@ -1,241 +1,233 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Online Book Club</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Online Book Club</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
 
-    <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/jquery-3.3.1.min.js"></script>
 
-    <script>
- var latlon="";
-        let markers = [];
+  <script>
+    var latlon = "";
+    let markers = [];
 
-        function initMap() {
-            const myLatlng = {
-                "lat": 21.964561102289554,
-                "lng": 39.68486389107354
-            };
-            const map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 8,
-                center: myLatlng,
-            });
-            // Configure the click listener.
-            map.addListener("click", (mapsMouseEvent) => {
-
-                for (let i = 0; i < markers.length; i++) {
-                    markers[i].setMap(null);
-                }
-
-                latlon = JSON.stringify(mapsMouseEvent.latLng.toJSON());
-                const marker = new google.maps.Marker({
-                    position: mapsMouseEvent.latLng.toJSON(),
-                    map: map,
-
-                });
-                markers.push(marker);
-            });
+    function initMap() {
+      const myLatlng = {
+        lat: 21.964561102289554,
+        lng: 39.68486389107354,
+      };
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 8,
+        center: myLatlng,
+      });
+      // Configure the click listener.
+      map.addListener("click", (mapsMouseEvent) => {
+        for (let i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
         }
 
-        window.initMap = initMap;
+        latlon = JSON.stringify(mapsMouseEvent.latLng.toJSON());
+        const marker = new google.maps.Marker({
+          position: mapsMouseEvent.latLng.toJSON(),
+          map: map,
+        });
+        markers.push(marker);
+      });
+    }
 
+    window.initMap = initMap;
 
-        function hasWhiteSpace(s) {
-            return s.indexOf(' ') >= 0;
-        }
+    function hasWhiteSpace(s) {
+      return s.indexOf(" ") >= 0;
+    }
 
+    function PreviewImage() {
+      var oFReader = new FileReader();
+      oFReader.readAsDataURL(document.getElementById("avatar_file").files[0]);
 
-        function PreviewImage() {
-            var oFReader = new FileReader();
-            oFReader.readAsDataURL(document.getElementById("avatar_file").files[0]);
+      oFReader.onload = function (oFREvent) {
+        document.getElementById("avatar").src = oFREvent.target.result;
+      };
+    }
+    function Register() {
+      var username = document.getElementById("username").value;
+      var password_1 = document.getElementById("password_1").value;
+      var password_2 = document.getElementById("password_2").value;
+      var email = document.getElementById("email").value;
+      var mobile = document.getElementById("mobile").value;
+      var address = document.getElementById("address").value;
+      var fullname = document.getElementById("fullname").value;
 
-            oFReader.onload = function(oFREvent) {
-                document.getElementById("avatar").src = oFREvent.target.result;
-            };
-        }
-        function Register() {
-            var username = document.getElementById("username").value;
-            var password_1 = document.getElementById("password_1").value;
-            var password_2 = document.getElementById("password_2").value;
-            var email = document.getElementById("email").value;
-            var mobile = document.getElementById("mobile").value;
-            var address = document.getElementById("address").value;
-            var fullname = document.getElementById("fullname").value;
+      var error = 0;
+      if (username.length < 3 || !hasWhiteSpace(username)) {
+        error = 1;
+        document.getElementById("user_l").style.color = "red";
+      } else {
+        document.getElementById("user_l").style.color = "black";
+      }
+      if (fullname.length < 3) {
+        error = 1;
+        document.getElementById("name_l").style.color = "red";
+      } else {
+        document.getElementById("name_l").style.color = "black";
+      }
+      if (address.length < 3) {
+        error = 1;
+        document.getElementById("address_l").style.color = "red";
+      } else {
+        document.getElementById("address_l").style.color = "black";
+      }
 
+      if (
+        email.length < 1 ||
+        !email
+          .toLowerCase()
+          .match(
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          )
+      ) {
+        error = 1;
+        document.getElementById("email_l").style.color = "red";
+        document.getElementById("email_l").value = "";
+        document.getElementById("email_l").placeholder = "Enter a valid email";
+      } else {
+        document.getElementById("email_l").style.color = "black";
+      }
+      if (!mobile.match(/^\d{10}$/) || !mobile.startsWith("05")) {
+        error = 1;
+        document.getElementById("phone_l").style.color = "red";
+        document.getElementById("phone_l").value = "";
+        document.getElementById("phone_l").placeholder = "Enter a valid phone";
+      } else {
+        document.getElementById("phone_l").style.color = "black";
+        document.getElementById("phone_l").placeholder = "Phone";
+      }
 
-            var error = 0;
-            if (username.length < 3 || !hasWhiteSpace(username)) {
-                error = 1;
-                document.getElementById("user_l").style.color = "red";
+      if (!password_1.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)) {
+        error = 1;
+        document.getElementById("pass_l").style.color = "red";
+        document.getElementById("pass_l").value =
+          "At least 8 chars (numbers, lowercase and uppercase) ";
+      } else if (password_1 != password_2) {
+        error = 1;
+        document.getElementById("pass_l").style.color = "red";
+        document.getElementById("pass_l").value = "Passwords don't match";
+      } else {
+        document.getElementById("pass_l").style.color = "black";
+        document.getElementById("pass_l").value = "Password";
+      }
 
+      if (error == 0) {
+        var reg = new Object();
+        reg.username = username;
+        reg.password = password_1;
+        reg.email = email;
+        reg.mobile = mobile;
+        reg.address = address;
+        reg.fullname = fullname;
+        var str = JSON.stringify(reg);
+
+        $.ajax({
+          type: "POST",
+          url: "server.php",
+          data: {
+            reg_user: str,
+          },
+          dataType: "text",
+          success: function (data) {
+            if (data.startsWith("Error")) {
+              alert(data);
             } else {
-                document.getElementById("user_l").style.color = "black";
+              alert("Addedd successfully");
+              window.location.replace("login.html");
             }
-            if (fullname.length < 3) {
-                error = 1;
-                document.getElementById("name_l").style.color = "red";
-
-            } else {
-                document.getElementById("name_l").style.color = "black";
-            }
-            if (address.length < 3) {
-                error = 1;
-                document.getElementById("address_l").style.color = "red";
-
-            } else {
-                document.getElementById("address_l").style.color = "black";
-            }
-
-            if (email.length < 1 || !email.toLowerCase()
-                .match(
-                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                )) {
-                error = 1;
-                document.getElementById("email_l").style.color = "red";
-                document.getElementById("email_l").value = "";
-                document.getElementById('email_l').placeholder = 'Enter a valid email';
-
-            } else {
-                document.getElementById("email_l").style.color = "black";
-            }
-            if (!mobile.match(/^\d{10}$/) || !mobile.startsWith('05')) {
-                error = 1;
-                document.getElementById("phone_l").style.color = "red";
-                document.getElementById('phone_l').value = "";
-                document.getElementById('phone_l').placeholder = 'Enter a valid phone';
-
-
-            } else {
-                document.getElementById("phone_l").style.color = "black";
-                document.getElementById("phone_l").placeholder = "Phone";
-
-            }
-
-            if (!password_1.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)) {
-                error = 1;
-                document.getElementById("pass_l").style.color = "red";
-                document.getElementById("pass_l").value = "At least 8 chars (numbers, lowercase and uppercase) ";
-
-
-            } else if (password_1 != password_2) {
-                error = 1;
-                document.getElementById("pass_l").style.color = "red";
-                document.getElementById("pass_l").value = "Passwords don't match";
-
-
-            } else {
-                document.getElementById("pass_l").style.color = "black";
-                document.getElementById("pass_l").value = "Password";
-            }
-
-            if (error == 0) {
-                var reg = new Object();
-                reg.username = username;
-                reg.password = password_1;
-                reg.email = email;
-                reg.mobile = mobile;
-                reg.address = address;
-                reg.fullname = fullname;
-                var str = JSON.stringify(reg);
-
-                $.ajax({
-                    type: "POST",
-                    url: "server.php",
-                    data: {
-                        reg_user: str
-                    },
-                    dataType: "text",
-                    success: function (data) {
-                        if (data.startsWith("Error")) {
-                            alert(data);
-                        } else {
-                            alert("Addedd successfully");
-                            window.location.replace("login.html");
-                        }
-                    }
-                });
-
-            }
-
-        }
-
-
-    </script>
-
-
+          },
+        });
+      }
+    }
+  </script>
 </head>
 
 <body>
-    <div class="nav">
-        <div class="logo">
-            <img src="images/book_logo.png">
-        </div>
-        <div class="nav_items">
-            <div class="nav_item"><a href="home.html">Home</a></div>
-            <div class="nav_item"><a href="login.html">Login</a></div>
-            <div class="nav_item"><a href="register.html">Register</a></div>
-        </div>
+  <div class="nav">
+    <div class="logo">
+      <img src="images/book_logo.png" />
     </div>
-
-
-    <div class="content">
-
-        <div class="reg_div">
-            <h1>Club Details</h1>
-            <div class="inner_form">
-
-                <div class="info_content">
-
-                    <div class="label_div">
-                        <label id="title_l">Club Title</label>
-                    </div>
-                    <div class="input_div">
-                        <i class="fa fa-user icon"></i>
-                        <input type="text" id="title" placeholder="Enter the title">
-                    </div>
-                   
-                    <div class="label_div">
-                        <label id="title_l">Club Logo</label>
-                    </div>
-                    <div class="input_div">
-                        <i class="fa fa-image icon"></i>
-                        <input id="avatar_file" name="avatar_file" type="file" accept="image/*"  onchange="PreviewImage();">
-                    </div>
-                    <img id="avatar" src="images/logo.png" alt="your logo" />
-
-                    <div class="label_div">
-                        <label id="address_l">Club Address</label>
-                    </div>
-                    <div class="input_div">
-                        <i class="fa fa-home icon"></i>
-
-                        <input type="text" id="address" placeholder="Enter your address">
-                    </div>
-                    <div class="label_div">
-                        <label id="address_l">Select the location</label>
-                    </div>
-                    <div class="input_div" id="map" style="width:100%;height:400px;border-radius: 10px;"></div>
-                    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmFVuBPCTN6Ytyvbbr7Qfic0oaeodclFc&callback=initMap&v=weekly" defer></script>
-    
-                    
-                    <div class="label_div">
-                        <label id="email_l">Description</label>
-                    </div>
-
-                    <div class="input_div">
-                        <i class="fa fa-info-circle icon"></i>
-                        <textarea rows="6" id="club_det" placeholder="Enter details about the club"> </textarea>
-
-                    </div>
-                    
-                </div>
-
-
-            </div>
-            <button type="button" class="button-83" onclick="Register()">Add</button>
-
-        </div>
-
-
+    <div class="nav_items">
+      <div class="nav_item"><a href="home.html">Home</a></div>
+      <div class="nav_item"><a href="login.html">Login</a></div>
+      <div class="nav_item"><a href="register.html">Register</a></div>
     </div>
+  </div>
+
+  <div class="content">
+    <div class="reg_div">
+      <h1>Club Details</h1>
+      <div class="inner_form">
+        <div class="info_content">
+          <div class="label_div">
+            <label id="title_l">Club Title</label>
+          </div>
+          <div class="input_div">
+            <i class="fa fa-user icon"></i>
+            <input type="text" id="title" placeholder="Enter the title" />
+          </div>
+
+          <div class="label_div">
+            <label id="title_l">Club Logo</label>
+          </div>
+          <div class="input_div">
+            <i class="fa fa-image icon"></i>
+            <input
+              id="avatar_file"
+              name="avatar_file"
+              type="file"
+              accept="image/*"
+              onchange="PreviewImage();"
+            />
+          </div>
+          <img id="avatar" src="images/logo.png" alt="your logo" />
+
+          <div class="label_div">
+            <label id="address_l">Club Address</label>
+          </div>
+          <div class="input_div">
+            <i class="fa fa-home icon"></i>
+
+            <input type="text" id="address" placeholder="Enter your address" />
+          </div>
+          <div class="label_div">
+            <label id="address_l">Select the location</label>
+          </div>
+          <div
+            class="input_div"
+            id="map"
+            style="width: 100%; height: 400px; border-radius: 10px"
+          ></div>
+          <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmFVuBPCTN6Ytyvbbr7Qfic0oaeodclFc&callback=initMap&v=weekly"
+            defer
+          ></script>
+
+          <div class="label_div">
+            <label id="email_l">Description</label>
+          </div>
+
+          <div class="input_div">
+            <i class="fa fa-info-circle icon"></i>
+            <textarea
+              rows="6"
+              id="club_det"
+              placeholder="Enter details about the club"
+            >
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="button-83" onclick="Register()">Add</button>
+    </div>
+  </div>
 </body>

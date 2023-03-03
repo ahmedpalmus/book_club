@@ -20,7 +20,7 @@
         lng: 39.68486389107354,
       };
       const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 8,
+        zoom: 10,
         center: myLatlng,
       });
       // Configure the click listener.
@@ -52,100 +52,99 @@
         document.getElementById("avatar").src = oFREvent.target.result;
       };
     }
-    function Register() {
-      var username = document.getElementById("username").value;
-      var password_1 = document.getElementById("password_1").value;
-      var password_2 = document.getElementById("password_2").value;
-      var email = document.getElementById("email").value;
-      var mobile = document.getElementById("mobile").value;
+    function Add() {
+      var title = document.getElementById("title").value;
       var address = document.getElementById("address").value;
-      var fullname = document.getElementById("fullname").value;
+      var image = document.getElementById("avatar_file").value;
+      var club_det = document.getElementById("club_det").value.trim();
 
       var error = 0;
-      if (username.length < 3 || !hasWhiteSpace(username)) {
+      if (latlon.length == 0) {
         error = 1;
-        document.getElementById("user_l").style.color = "red";
+        var temp= document.getElementById("loc").value;
+        document.getElementById("loc").value=temp+" *";
+        document.getElementById("loc").style.color = "red";
+        document.getElementById("loc").style.backgroundColor = "yellow";
       } else {
-        document.getElementById("user_l").style.color = "black";
+        document.getElementById("loc").style.color = "white";
+        document.getElementById("loc").style.backgroundColor = "transparent";
       }
-      if (fullname.length < 3) {
+      if (image.length == 0) {
         error = 1;
-        document.getElementById("name_l").style.color = "red";
+        document.getElementById("logo_l").style.color = "red";
+        document.getElementById("logo_l").style.backgroundColor = "yellow";
       } else {
-        document.getElementById("name_l").style.color = "black";
+        document.getElementById("logo_l").style.color = "white";
+        document.getElementById("logo_l").style.backgroundColor = "transparent";
+      }
+
+      if (title.length < 3) {
+        error = 1;
+        document.getElementById("title_l").style.color = "red";
+        document.getElementById("title_l").style.backgroundColor = "yellow";
+      } else {
+        document.getElementById("title_l").style.color = "white";
+        document.getElementById("title_l").style.backgroundColor =
+          "transparent";
+      }
+      if (club_det.length < 3) {
+        error = 1;
+        document.getElementById("desc_l").style.color = "red";
+        document.getElementById("desc_l").style.backgroundColor = "yellow";
+      } else {
+        document.getElementById("desc_l").style.color = "white";
+        document.getElementById("desc_l").style.backgroundColor = "transparent";
       }
       if (address.length < 3) {
         error = 1;
         document.getElementById("address_l").style.color = "red";
+        document.getElementById("address_l").style.backgroundColor = "yellow";
       } else {
-        document.getElementById("address_l").style.color = "black";
-      }
-
-      if (
-        email.length < 1 ||
-        !email
-          .toLowerCase()
-          .match(
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          )
-      ) {
-        error = 1;
-        document.getElementById("email_l").style.color = "red";
-        document.getElementById("email_l").value = "";
-        document.getElementById("email_l").placeholder = "Enter a valid email";
-      } else {
-        document.getElementById("email_l").style.color = "black";
-      }
-      if (!mobile.match(/^\d{10}$/) || !mobile.startsWith("05")) {
-        error = 1;
-        document.getElementById("phone_l").style.color = "red";
-        document.getElementById("phone_l").value = "";
-        document.getElementById("phone_l").placeholder = "Enter a valid phone";
-      } else {
-        document.getElementById("phone_l").style.color = "black";
-        document.getElementById("phone_l").placeholder = "Phone";
-      }
-
-      if (!password_1.match(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/)) {
-        error = 1;
-        document.getElementById("pass_l").style.color = "red";
-        document.getElementById("pass_l").value =
-          "At least 8 chars (numbers, lowercase and uppercase) ";
-      } else if (password_1 != password_2) {
-        error = 1;
-        document.getElementById("pass_l").style.color = "red";
-        document.getElementById("pass_l").value = "Passwords don't match";
-      } else {
-        document.getElementById("pass_l").style.color = "black";
-        document.getElementById("pass_l").value = "Password";
+        document.getElementById("address_l").style.color = "white";
+        document.getElementById("address_l").style.backgroundColor =
+          "transparent";
       }
 
       if (error == 0) {
-        var reg = new Object();
-        reg.username = username;
-        reg.password = password_1;
-        reg.email = email;
-        reg.mobile = mobile;
-        reg.address = address;
-        reg.fullname = fullname;
-        var str = JSON.stringify(reg);
+        var info = new Object();
+        info.title = title;
+        info.latlon = latlon;
+        info.club_det = club_det;
+        info.address = address;
+        var str = JSON.stringify(info);
 
         $.ajax({
           type: "POST",
           url: "server.php",
           data: {
-            reg_user: str,
+            add_club: str,
           },
           dataType: "text",
           success: function (data) {
-            if (data.startsWith("Error")) {
-              alert(data);
-            } else {
-              alert("Addedd successfully");
-              window.location.replace("login.html");
+            if (data != "failure") {
+              uploadImage(data);
             }
           },
         });
+      }
+
+      function uploadImage(product_id) {
+        var file = document.getElementById("avatar_file").files[0];
+        var fd = new FormData();
+        fd.append("image", file);
+        fd.append("product_id", product_id);
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText == "success") {
+              alert("Added successfully");
+
+              window.location.replace("home.html");
+            }
+          }
+        };
+        xhr.open("POST", "server.php", true);
+        xhr.send(fd);
       }
     }
   </script>
@@ -177,7 +176,7 @@
           </div>
 
           <div class="label_div">
-            <label id="title_l">Club Logo</label>
+            <label id="logo_l">Club Logo</label>
           </div>
           <div class="input_div">
             <i class="fa fa-image icon"></i>
@@ -200,7 +199,7 @@
             <input type="text" id="address" placeholder="Enter your address" />
           </div>
           <div class="label_div">
-            <label id="address_l">Select the location</label>
+            <label id="loc">Select the location</label>
           </div>
           <div
             class="input_div"
@@ -213,7 +212,7 @@
           ></script>
 
           <div class="label_div">
-            <label id="email_l">Description</label>
+            <label id="desc_l">Description</label>
           </div>
 
           <div class="input_div">
@@ -227,7 +226,7 @@
           </div>
         </div>
       </div>
-      <button type="button" class="button-83" onclick="Register()">Add</button>
+      <button type="button" class="button-83" onclick="Add()">Add</button>
     </div>
   </div>
 </body>

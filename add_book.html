@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<head>
+  <title>Online Book Club</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  />
+
+  <script src="js/jquery-3.3.1.min.js"></script>
+
+  <script>
+    
+    function hasWhiteSpace(s) {
+      return s.indexOf(" ") >= 0;
+    }
+
+    function PreviewImage() {
+      var oFReader = new FileReader();
+      oFReader.readAsDataURL(document.getElementById("avatar_file").files[0]);
+
+      oFReader.onload = function (oFREvent) {
+        document.getElementById("avatar").src = oFREvent.target.result;
+      };
+    }
+    function Add() {
+      var title = document.getElementById("title").value;
+      var address = document.getElementById("address").value;
+      var image = document.getElementById("avatar_file").value;
+      var club_det = document.getElementById("club_det").value.trim();
+
+      var error = 0;
+      if (latlon.length == 0) {
+        error = 1;
+        var temp= document.getElementById("loc").value;
+        document.getElementById("loc").value=temp+" *";
+        document.getElementById("loc").style.color = "red";
+        document.getElementById("loc").style.backgroundColor = "yellow";
+      } else {
+        document.getElementById("loc").style.color = "white";
+        document.getElementById("loc").style.backgroundColor = "transparent";
+      }
+      if (image.length == 0) {
+        error = 1;
+        document.getElementById("logo_l").style.color = "red";
+        document.getElementById("logo_l").style.backgroundColor = "yellow";
+      } else {
+        document.getElementById("logo_l").style.color = "white";
+        document.getElementById("logo_l").style.backgroundColor = "transparent";
+      }
+
+      if (title.length < 3) {
+        error = 1;
+        document.getElementById("title_l").style.color = "red";
+        document.getElementById("title_l").style.backgroundColor = "yellow";
+      } else {
+        document.getElementById("title_l").style.color = "white";
+        document.getElementById("title_l").style.backgroundColor =
+          "transparent";
+      }
+      if (club_det.length < 3) {
+        error = 1;
+        document.getElementById("desc_l").style.color = "red";
+        document.getElementById("desc_l").style.backgroundColor = "yellow";
+      } else {
+        document.getElementById("desc_l").style.color = "white";
+        document.getElementById("desc_l").style.backgroundColor = "transparent";
+      }
+      if (address.length < 3) {
+        error = 1;
+        document.getElementById("address_l").style.color = "red";
+        document.getElementById("address_l").style.backgroundColor = "yellow";
+      } else {
+        document.getElementById("address_l").style.color = "white";
+        document.getElementById("address_l").style.backgroundColor =
+          "transparent";
+      }
+
+      if (error == 0) {
+        var info = new Object();
+        info.title = title;
+        info.latlon = latlon;
+        info.club_det = club_det;
+        info.address = address;
+        var str = JSON.stringify(info);
+
+        $.ajax({
+          type: "POST",
+          url: "server.php",
+          data: {
+            add_club: str,
+          },
+          dataType: "text",
+          success: function (data) {
+            if (data != "failure") {
+              uploadImage(data);
+            }
+          },
+        });
+      }
+
+      function uploadImage(product_id) {
+        var file = document.getElementById("avatar_file").files[0];
+        var fd = new FormData();
+        fd.append("image", file);
+        fd.append("product_id", product_id);
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+            if (this.responseText == "success") {
+              alert("Added successfully");
+
+              window.location.replace("home.html");
+            }
+          }
+        };
+        xhr.open("POST", "server.php", true);
+        xhr.send(fd);
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="nav">
+    <div class="logo">
+      <img src="images/book_logo.png" />
+    </div>
+    <div class="nav_items">
+      <div class="nav_item"><a href="home.html">Home</a></div>
+      <div class="nav_item"><a href="login.html">Login</a></div>
+      <div class="nav_item"><a href="register.html">Register</a></div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="reg_div">
+      <h1>Book Details</h1>
+      <div class="inner_form">
+        <div class="info_content">
+          <div class="label_div">
+            <label id="title_l">Book Title</label>
+          </div>
+          <div class="input_div">
+            <i class="fa fa-user icon"></i>
+            <input type="text" id="title" placeholder="Enter the title" />
+          </div>
+
+          <div class="label_div">
+            <label id="logo_l">Book image</label>
+          </div>
+          <div class="input_div">
+            <i class="fa fa-image icon"></i>
+            <input
+              id="avatar_file"
+              name="avatar_file"
+              type="file"
+              accept="image/*"
+              onchange="PreviewImage();"
+            />
+          </div>
+          <img id="avatar" src="images/logo.png" alt="your logo" />
+
+          <div class="label_div">
+            <label id="author_l">Author</label>
+          </div>
+          <div class="input_div">
+            <i class="fa fa-home icon"></i>
+
+            <input type="text" id="author" placeholder="Enter the name of the author" />
+          </div>
+          <div class="label_div">
+            <label id="pub_l">Publisher</label>
+          </div>
+          <div class="input_div">
+            <i class="fa fa-home icon"></i>
+
+            <input type="text" id="publisher" placeholder="Enter the name of the publisher" />
+          </div>
+          <div class="label_div">
+            <label id="author_l">Publish date</label>
+          </div>
+          <div class="input_div">
+            <i class="fa fa-home icon"></i>
+
+            <input type="date" id="author" placeholder="Enter the name of the author" />
+          </div>
+          <div class="label_div">
+            <label id="desc_l">Description</label>
+          </div>
+
+          <div class="input_div">
+            <i class="fa fa-info-circle icon"></i>
+            <textarea
+              rows="6"
+              id="club_det"
+              placeholder="Enter details about the book"
+            >
+            </textarea>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="button-83" onclick="Add()">Add</button>
+    </div>
+  </div>
+</body>

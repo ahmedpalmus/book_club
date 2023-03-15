@@ -1,10 +1,12 @@
+@import url(https://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
     list-style-type: none;
-    font-family: 'Bentham', serif;
+    font-family: 'Droid Arabic Kufi', serif;
     scroll-behavior: smooth;
 }
 
@@ -85,7 +87,7 @@ color: wheat;
 .div_content{
     padding-bottom: 50px;
 color: rgb(223, 228, 228);
-font-size: 32px; ;
+font-size: 22px; ;
 text-align: center;
 text-shadow: #03043f;
 line-height: 1.6;
@@ -95,7 +97,7 @@ width: 70%;
 
 .div_button a{
     padding: 10px 20px;
-    font-size: 30px;
+    font-size: 20px;
     background-color: #f5f5fa;
     color: #03043f;
     border-radius: 10px;
@@ -103,7 +105,7 @@ width: 70%;
 }
 .div_button a:hover{
     padding: 10px 25px;
-    font-size: 32px;
+    font-size: 22px;
     background-color: #f5f5fa;
     color: #03043f;
     border-radius: 15px;
@@ -118,7 +120,7 @@ width: 70%;
     position: relative;
     padding: 0 10px;
     overflow: hidden;
-    font-size: 25px;
+    font-size: 20px;
     transition: 0.3s;
 }
 
